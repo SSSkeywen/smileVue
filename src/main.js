@@ -3,7 +3,8 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
-
+// import VueAwesomeSwiper from 'vue-awesome-swiper'.use(VueAwesomeSwiper)
+// import 'swiper/dist/css/swiper.css'
 
 
 import {Button, Row, Col, Swipe, SwipeItem, Lazyload} from 'vant'

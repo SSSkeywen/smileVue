@@ -17,36 +17,68 @@
         <div class="swiper_area">
             <van-swipe :autoplay="1000">
                 <van-swipe-item v-for="(banner, index) in bannerPicArray" :key="index">
-                    <img v-lazy="banner.imageUrl" width="100%">
+                    <img v-lazy="banner.image" width="100%">
                 </van-swipe-item>
             </van-swipe>
         </div>
+        <!-- type one -->
+        <div class="type_bar">
+            <div v-for="(cate, index) in category" :key="index">
+                <img v-lazy="cate.image" width="90%" >
+                <span>{{ cate.mallCategoryName }}</span>
+            </div>
+        </div>
+        <!-- adbanner area -->
+        <div>
+            <img v-lazy="adBanner" width="100%">
+        </div>
+        <!-- Recommend goods area -->
+        <div class="recommend_area">
+            <div class="recommend_title">
+                商品推荐
+            </div>
+            <div class="recommend_body">
+                <swiper :options="swiperOption">
+                    <swiper-slide v-for="(item, index) in recommendGoods" :key="index">
+                        <div class="recommend_item">
+                            <img :src="item.image" width="80%">
+                            <div>{{ item.goodsName }}</div>
+                            <div>¥ {{ item.price }}(¥ {{ item.mallPrice }})</div>
+                        </div>
+                    </swiper-slide>
+                </swiper>
+            </div>
+        </div>
+
+        <swiper-default></swiper-default>
+        <swiper-default2></swiper-default2>
+        <swiper-default3></swiper-default3>
     </div>
 </template>
 
 <script>
 import axios from 'axios'
+import'swiper/dist/css/swiper.css'
+import {swiper , swiperSlide} from 'vue-awesome-swiper'
+import swiperDefault from '../swiper/swiperDefault'
+import swiperDefault2 from '../swiper/swiperDefault2'
+import swiperDefault3 from '../swiper/swiperDefault3'
+
 export default {
   data() {
     return {
+      swiperOption:{
+          slidesPerView: 3
+      },
       msg: "Shopping Mall",
       locationIcon: require("../../assets/images/location.png"),
-      bannerPicArray: [
-        {
-          imageUrl:
-            "http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic001.jpg"
-        },
-        {
-          imageUrl:
-            "http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic002.jpg"
-        },
-        {
-          imageUrl:
-            "http://7xjyw1.com1.z0.glb.clouddn.com/simleVueDemoPic003.jpg"
-        }
-      ]
+      bannerPicArray: [],
+      category: [],
+      adBanner: '',
+      recommendGoods: [],
     };
   },
+  components: {swiper, swiperSlide, swiperDefault, swiperDefault2, swiperDefault3},
   created(){
       axios({
           url: 'https://www.easy-mock.com/mock/5ae3d378a223347f360565ca/SmileVue/index',
@@ -54,6 +86,12 @@ export default {
       })
       .then(response =>{
           console.log(response)
+          if(response.status == 200){
+              this.category = response.data.data.category
+              this.adBanner = response.data.data.advertesPicture.PICTURE_ADDRESS
+              this.bannerPicArray = response.data.data.slides
+              this.recommendGoods = response.data.data.recommend
+          }
       })
       .catch(error => {
           console.log(error)
@@ -87,5 +125,39 @@ export default {
     clear: both;
     max-height: 15rem;
     overflow: hidden;
+}
+
+.type_bar{
+    background-color: #fff;
+    margin: 0 .3rem .3rem .3rem;
+    border-radius: .3rem;
+    font-size: 14px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.type_bar div{
+    padding: .3rem;
+    font-size: 12px;
+    text-align: center;
+}
+.recommend_area{
+    background-color: #fff;
+    margin-top: .3rem;
+}
+.recommend_title{
+    border-bottom: 1px solid #eee;
+    font-size: 14px;
+    padding: .2rem;
+    color: #e5017d;
+}
+.recommend_body{
+    border-bottom: 1px solid #eee;
+}
+.recommend_item{
+    width: 99%;
+    border-right: 1px solid #eee;
+    font-size: 12px;
+    text-align: center;
 }
 </style>
