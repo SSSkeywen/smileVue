@@ -7,8 +7,11 @@ import router from './router'
 // import 'swiper/dist/css/swiper.css'
 
 
-import {Button, Row, Col, Swipe, SwipeItem, Lazyload} from 'vant'
-Vue.use(Button).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Lazyload)
+import {Button, Row, Col, Swipe, SwipeItem, Lazyload, List, Field, NavBar} from 'vant'
+Vue.use(Field).use(NavBar).use(Button).use(Row).use(Col).use(Swipe).use(SwipeItem).use(Lazyload).use(List)
+
+
+
 import { DatetimePicker } from 'vant'
 Vue.use(DatetimePicker)
 import { AddressEdit } from 'vant';
