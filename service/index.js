@@ -4,20 +4,38 @@ const { connect, initSchemas } = require('./database/init.js')
 const mongoose = require('mongoose')
 
 
-;(async () => {
-    await connect()
-    initSchemas()
-    const User = mongoose.model('User')
-    let oneUser = new User({userName: 'jspangaas02', password: '123456'})
-    oneUser.save().then(() => {
-        console.log('插入成功')
-    })
-    let user = await User.findOne({}).exec()
-    console.log('------------------')
-    console.log(user)
-    console.log('------------------')
+const Router = require('koa-router')
 
-})()
+let user = require('./appApi/user.js')
+let home = require('./appApi/home.js')
+
+//装载所有子路由
+let router = new Router()
+router.use('/user', user.routes())
+router.use('/home', home.routes())
+
+//大公司用egg.js
+
+//加载路由中间件
+
+app.use(router.routes())
+app.use(router.allowedMethods())
+
+
+// ;(async () => {
+//     await connect()
+//     initSchemas()
+//     const User = mongoose.model('User')
+//     let oneUser = new User({userName: 'jspangaas02', password: '123456'})
+//     oneUser.save().then(() => {
+//         console.log('插入成功')
+//     })
+//     let user = await User.findOne({}).exec()
+//     console.log('------------------')
+//     console.log(user)
+//     console.log('------------------')
+
+// })()
 
 app.use(async(ctx) => {
     ctx.body = '<h1>Hello World</h1>'
