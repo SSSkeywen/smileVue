@@ -60,7 +60,7 @@
                 <van-list>
                     <van-row gutter="20">
                         <van-col span="12" v-for="(item, index) in hotGoods" :key="index">
-                            <goods-info :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></goods-info>
+                            <goods-info :goodsId="item.goodsId" :goodsImage="item.image" :goodsName="item.name" :goodsPrice="item.price"></goods-info>
                         </van-col>
                     </van-row>
                 </van-list>
@@ -125,6 +125,19 @@ export default {
       .catch(error => {
         console.log(error);
       });
+    //   axios({
+    //   url: url.getCategoryList,
+    //   method: "get"
+    // })
+    //   .then(response => {
+    //     console.log(response);
+    //     if (response.status == 200) {
+    //       this.category = response.data.message;
+    //     }
+    //   })
+    //   .catch(error => {
+    //     console.log(error);
+    //   });
   }
 };
 </script>
@@ -169,7 +182,7 @@ export default {
   padding: 0.3rem;
   font-size: 12px;
   text-align: center;
-  width: 20%;
+  flex: 1;
 }
 .recommend_area {
   background-color: #fff;
